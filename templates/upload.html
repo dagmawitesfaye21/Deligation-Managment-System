@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h2>
+        {% if lang == 'am' %}
+            የተያዣ ማስፈንጠሪያ
+        {% else %}
+            Upload Delegation
+        {% endif %}
+    </h2>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload') }}?lang={{ lang }}">
+        <div class="form-group">
+            <label for="branch_name">
+                {% if lang == 'am' %}
+                    ቅርንጫፍ ስም
+                {% else %}
+                    Branch Name
+                {% endif %}
+            </label>
+            <input type="text" id="branch_name" name="branch_name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="staff_id">
+                {% if lang == 'am' %}
+                    የሰራተኛ መለያ
+                {% else %}
+                    Staff ID
+                {% endif %}
+            </label>
+            <input type="text" id="staff_id" name="staff_id" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="delegation_letter">
+                {% if lang == 'am' %}
+                    የተያዣ ደብዳቤ
+                {% else %}
+                    Delegation Letter
+                {% endif %}
+            </label>
+            <input type="file" id="delegation_letter" name="delegation_letter" accept="{{ allowed_extensions }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_front">
+                {% if lang == 'am' %}
+                    የሰራተኛ መለያ (ፊት ክፍል)
+                {% else %}
+                    Employee ID (Front)
+                {% endif %}
+            </label>
+            <input type="file" id="id_front" name="id_front" accept="{{ allowed_extensions }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_back">
+                {% if lang == 'am' %}
+                    የሰራተኛ መለያ (ጀርባ ክፍል)
+                {% else %}
+                    Employee ID (Back)
+                {% endif %}
+            </label>
+            <input type="file" id="id_back" name="id_back" accept="{{ allowed_extensions }}" required>
+        </div>
+        
+        <button type="submit">
+            {% if lang == 'am' %}
+                አስፈንጠር
+            {% else %}
+                Upload
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

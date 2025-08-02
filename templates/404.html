@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-container">
+    <h1>404</h1>
+    <p>
+        {% if lang == 'am' %}
+            ገጹ አልተገኘም
+        {% else %}
+            Page Not Found
+        {% endif %}
+    </p>
+    <a href="{{ url_for('home') }}" class="btn">
+        {% if lang == 'am' %}
+            ወደ መነሻ ገጽ ተመለስ
+        {% else %}
+            Return to Home
+        {% endif %}
+    </a>
+</div>
+{% endblock %}

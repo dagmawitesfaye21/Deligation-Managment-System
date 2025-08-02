@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h2>
+        {% if lang == 'am' %}
+            የተያዦችን አስተዳደር
+        {% else %}
+            Manage Delegations
+        {% endif %}
+    </h2>
+    <form method="POST" action="{{ url_for('manage') }}?lang={{ lang }}">
+        <div class="form-group">
+            <label for="branch_name">
+                {% if lang == 'am' %}
+                    ቅርንጫፍ ስም
+                {% else %}
+                    Branch Name
+                {% endif %}
+            </label>
+            <input type="text" id="branch_name" name="branch_name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="staff_id">
+                {% if lang == 'am' %}
+                    የሰራተኛ መለያ
+                {% else %}
+                    Staff ID
+                {% endif %}
+            </label>
+            <input type="text" id="staff_id" name="staff_id" required>
+        </div>
+        
+        <button type="submit">
+            {% if lang == 'am' %}
+                ፈልግ
+            {% else %}
+                Search
+            {% endif %}
+        </button>
+    </form>
+    
+    {% if files %}
+    <div class="results-container">
+        <h3>
+            {% if lang == 'am' %}
+                የተገኙ ውጤቶች
+            {% else %}
+                Search Results
+            {% endif %}
+        </h3>
+        
+        <div class="document-container">
+            <div class="document">
+                <h4>
+                    {% if lang == 'am' %}
+                        የተያዣ ደብዳቤ
+                    {% else %}
+                        Delegation Letter
+                    {% endif %}
+                </h4>
+                {% if files.letter.type and files.letter.type.startswith('image/') %}
+                    <img src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.letter.filename) }}" alt="Delegation Letter">
+                {% elif files.letter.type == 'application/pdf' %}
+                    <iframe src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.letter.filename) }}" width="100%" height="500px"></iframe>
+                {% else %}
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                        <p>{{ files.letter.filename.split('.')[-1].upper() }}</p>
+                    </div>
+                {% endif %}
+                <div class="document-actions">
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.letter.filename) }}" download>
+                        {% if lang == 'am' %}
+                            ያውርዱ
+                        {% else %}
+                            Download
+                        {% endif %}
+                    </a>
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.letter.filename) }}" target="_blank">
+                        {% if lang == 'am' %}
+                            ክፍት
+                        {% else %}
+                            Open
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            
+            <div class="document">
+                <h4>
+                    {% if lang == 'am' %}
+                        የሰራተኛ መለያ (ፊት ክፍል)
+                    {% else %}
+                        Employee ID (Front)
+                    {% endif %}
+                </h4>
+                {% if files.id_front.type and files.id_front.type.startswith('image/') %}
+                    <img src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_front.filename) }}" alt="ID Front">
+                {% elif files.id_front.type == 'application/pdf' %}
+                    <iframe src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_front.filename) }}" width="100%" height="500px"></iframe>
+                {% else %}
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                        <p>{{ files.id_front.filename.split('.')[-1].upper() }}</p>
+                    </div>
+                {% endif %}
+                <div class="document-actions">
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_front.filename) }}" download>
+                        {% if lang == 'am' %}
+                            ያውርዱ
+                        {% else %}
+                            Download
+                        {% endif %}
+                    </a>
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_front.filename) }}" target="_blank">
+                        {% if lang == 'am' %}
+                            ክፍት
+                        {% else %}
+                            Open
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            
+            <div class="document">
+                <h4>
+                    {% if lang == 'am' %}
+                        የሰራተኛ መለያ (ጀርባ ክፍል)
+                    {% else %}
+                        Employee ID (Back)
+                    {% endif %}
+                </h4>
+                {% if files.id_back.type and files.id_back.type.startswith('image/') %}
+                    <img src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_back.filename) }}" alt="ID Back">
+                {% elif files.id_back.type == 'application/pdf' %}
+                    <iframe src="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_back.filename) }}" width="100%" height="500px"></iframe>
+                {% else %}
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                        <p>{{ files.id_back.filename.split('.')[-1].upper() }}</p>
+                    </div>
+                {% endif %}
+                <div class="document-actions">
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_back.filename) }}" download>
+                        {% if lang == 'am' %}
+                            ያውርዱ
+                        {% else %}
+                            Download
+                        {% endif %}
+                    </a>
+                    <a href="{{ url_for('uploaded_file', filename=branch_name + '/' + staff_id + '/' + files.id_back.filename) }}" target="_blank">
+                        {% if lang == 'am' %}
+                            ክፍት
+                        {% else %}
+                            Open
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
